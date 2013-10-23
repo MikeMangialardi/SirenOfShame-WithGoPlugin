@@ -74,7 +74,7 @@ namespace GoServices
 
         private string GetRequestedBy()
         {
-            var failedStage = _pipeline.First(x => x.Element("messages") != null &&
+            var failedStage = _pipeline.FirstOrDefault(x => x.Element("messages") != null &&
                                                    x.Element("messages").Element("message") != null);
             try
             {
