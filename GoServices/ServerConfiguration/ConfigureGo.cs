@@ -17,7 +17,6 @@ namespace GoServices.ServerConfiguration
 {
     public partial class ConfigureGo : ConfigureServerBase
     {
-        private SirenOfShameSettings _settings;
         private GoCiEntryPoint _goCiEntryPoint;
         private CiEntryPointSetting _ciEntryPointSetting;
         private GoService _service = new GoService();
@@ -25,7 +24,7 @@ namespace GoServices.ServerConfiguration
 
         public ConfigureGo(SirenOfShameSettings sosSettings, GoCiEntryPoint goCiEntryPoint, CiEntryPointSetting ciEntryPointSetting)
         {
-            _settings = sosSettings;
+            this.Settings = sosSettings;
             _goCiEntryPoint = goCiEntryPoint;
             _ciEntryPointSetting = ciEntryPointSetting;
 
@@ -72,13 +71,13 @@ namespace GoServices.ServerConfiguration
             _ciEntryPointSetting.Url = _url.Text;
             _ciEntryPointSetting.UserName = _userName.Text;
             _ciEntryPointSetting.SetPassword(_password.Text);
-            Settings.Save();
+            this.Settings.Save();
 
             _projects.Nodes.Clear();
             var goBuildDefinitions = buildDefinitions.OrderBy(i => i.Name);
             foreach (var project in goBuildDefinitions)
             {
-                bool exists = Settings.BuildExistsAndIsActive(_goCiEntryPoint.Name, project.Name);
+                bool exists = this.Settings.BuildExistsAndIsActive(_goCiEntryPoint.Name, project.Name);
 
                 var node = new ThreeStateTreeNode(project.Name)
                 {

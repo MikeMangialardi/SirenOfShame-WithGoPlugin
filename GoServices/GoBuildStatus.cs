@@ -49,7 +49,7 @@ namespace GoServices
                 return BuildStatusEnum.Working;
             }
             if (_pipeline.Select(x => x.Attribute("activity").Value).Any(a => a == "Sleeping") &&
-                _pipeline.Select(x => x.Attribute("lastBuildStatus").Value).Any(s => s == "Failed"))
+                _pipeline.Select(x => x.Attribute("lastBuildStatus").Value).Any(s => s == "Failure"))
             {
                 return BuildStatusEnum.Broken;
             }
