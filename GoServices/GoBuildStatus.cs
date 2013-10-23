@@ -74,8 +74,18 @@ namespace GoServices
 
         private string GetRequestedBy()
         {
-            var failedStage = _pipeline.First(x => x.Element("messages") != null);
-            return failedStage != null? failedStage.Element("messages").Element("message").Attribute("text").Value : string.Empty;
+            var failedStage = _pipeline.First(x => x.Element("messages") != null &&
+                                                   x.Element("messages").Element("message") != null);
+            try
+            {
+                return failedStage != null
+                           ? failedStage.Element("messages").Element("message").Attribute("text").Value
+                           : string.Empty;
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
         }
     }
 }
